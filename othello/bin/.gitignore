@@ -1,0 +1,6 @@
+/othello/
+
+# Eclipse
+.project
+.classpath
+.settings
