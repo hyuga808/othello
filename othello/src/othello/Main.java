@@ -16,7 +16,7 @@ public class Main {
 			System.out.println("Y座標を入力してください");
 			int y = sc.nextInt();
 			
-			bd.setStone(--x,--y);
+			bd.setStone(x,y);
 		}
 	}
 
