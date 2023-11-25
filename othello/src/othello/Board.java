@@ -37,9 +37,9 @@ public class Board {
 		int count_black = 0;
 		int count_white = 0;
 		int count_empty = 0;
-		int i = 1;
+		int i = 0;
 		
-		System.out.println(" |1|2|3|4|5|6|7|8|");
+		System.out.println(" |0|1|2|3|4|5|6|7|");
 		System.out.println("------------------");
 		for(String[] bd : board) {
 			System.out.print(i + "|");
@@ -58,13 +58,11 @@ public class Board {
 			System.out.println("");
 			i++;
 		}
-		
 		System.out.println("------------------");
 		System.out.println(BLACK + "：" + count_black);
 		System.out.println(WHITE + "：" + count_white);
 		System.out.println("空き：" + count_empty);
 		System.out.println("------------------");
-		
 		if(count_empty == 0 || !(this.game)) {
 			System.out.println("終了！！！");
 			this.game = false;
@@ -109,18 +107,23 @@ public class Board {
 			else 
 			{
 				reverseStone();
-			}
-		}
-		
-		//ボード全体で駒を配置できる箇所があるか判定する。
-		if(!(checkBoard())) {
-			reverseStone();
-			//自ターンで配置できる箇所がない場合、相手ターンのチェックも行う。
-			if(checkBoard()) {
-				System.out.println(next_stone + "で配置できる箇所がないので" + stone + "のターンに移ります。");
-			} else {
-				this.game = false;
-				System.out.println(stone + "と" + next_stone + "どちらも配置できる箇所がないのでゲームを終了します。");
+				//駒入れ替え後に全体で配置できる箇所があるかチェック
+				if(!(this.checkBoard())) {
+					//自駒で反転箇所がない場合、相手の駒の配置チェックを行う。
+					reverseStone();
+					if(this.checkBoard()) {
+						System.out.println("--------------------------------");
+						System.out.println(this.next_stone + "は配置できる箇所がありません。");
+						System.out.println("引き続き" + this.stone + "のターンです。");
+						System.out.println("--------------------------------");
+					} else {
+						//両者配置できる箇所がない場合はゲーム終了。
+						System.out.println("--------------------------------");
+						System.out.println("両者配置できる箇所がありません。");
+						System.out.println("--------------------------------");
+						this.game = false;
+					}
+				}
 			}
 		}
 		show();
@@ -132,15 +135,15 @@ public class Board {
 		
 		for(int i = 0; i < 8; i++) {
 			for(int j = 0; j < 8; j++) {
-				if(board[j][i].equals(EMPTY)) {
-					this.turnUp(j,i,true);
-					this.turnRight(j,i,true);
-					this.turnDown(j,i,true);
-					this.turnLeft(j,i,true);
-					this.turnRightUp(j,i,true);
-					this.turnRightDown(j,i,true);
-					this.turnLeftUp(j,i,true);
-					this.turnLeftDown(j,i,true);
+				if(board[i][j].equals(EMPTY)) {
+					this.turnUp(i,j,true);
+					this.turnRight(i,j,true);
+					this.turnDown(i,j,true);
+					this.turnLeft(i,j,true);
+					this.turnRightUp(i,j,true);
+					this.turnRightDown(i,j,true);
+					this.turnLeftUp(i,j,true);
+					this.turnLeftDown(i,j,true);
 				}
 			}
 		}
